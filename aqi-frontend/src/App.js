@@ -30,7 +30,7 @@ export default class App extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    fetch('http://127.0.0.1:5000/predict', {
+    fetch('predict', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

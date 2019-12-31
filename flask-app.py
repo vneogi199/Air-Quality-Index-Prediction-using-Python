@@ -3,9 +3,8 @@ import sys
 from builtins import dict
 
 import pandas as pd
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS, cross_origin
-
 
 app = Flask(__name__, static_folder='./aqi-frontend/build/static',
             template_folder='./aqi-frontend/build')
@@ -24,6 +23,12 @@ def predict_aqi(data: dict, filename: str) -> float:
 def index() -> str:
     # Just verify if server is up
     return "Hello World"
+
+
+@app.route('/aqi-frontend')
+@cross_origin()
+def render_frontend():
+    return render_template('index.html')
 
 
 @app.route('/predict', methods=['POST'])

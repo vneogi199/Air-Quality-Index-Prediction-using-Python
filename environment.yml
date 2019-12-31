@@ -1,0 +1,5 @@
+name: aqi-prediction  # overridden at install, so this is for your use with conda env
+dependencies:
+  - flask
+  - flask_cors
+  - pandas

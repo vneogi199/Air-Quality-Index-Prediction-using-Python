@@ -4,8 +4,13 @@ from builtins import dict
 
 import pandas as pd
 from flask import Flask, request, jsonify
+from flask_cors import CORS, cross_origin
 
-app = Flask(__name__)
+
+app = Flask(__name__, static_folder='./aqi-frontend/build/static',
+            template_folder='./aqi-frontend/build')
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 def predict_aqi(data: dict, filename: str) -> float:
@@ -15,31 +20,22 @@ def predict_aqi(data: dict, filename: str) -> float:
 
 
 @app.route('/')
+@cross_origin()
 def index() -> str:
     # Just verify if server is up
     return "Hello World"
 
 
-@app.route('/predict', methods=['GET'])
+@app.route('/predict', methods=['POST'])
+@cross_origin()
 def predict() -> dict:
     try:
-        cols = ['T', 'TM', 'Tm', 'H', 'PP', 'VV', 'V', 'VM']
-        input_dict = {}
-        for col in cols:
-            input_dict[col] = float(request.args[col])
-        if None not in input_dict.items():
-            result = str(predict_aqi(input_dict, 'xgb.pkl'))
-        else:
-            result = {
-                'success': False,
-                'message': 'Invalid inputs'
-            }
+        formData = request.json
+        print(formData)
+        result = str(predict_aqi(formData, 'xgb.pkl'))
     except:
         print(sys.exc_info())
-        result = {
-            'success': False,
-            'message': 'Server error'
-        }
+        result = 'Server error'
     return jsonify(result)
 
 

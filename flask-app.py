@@ -1,10 +1,12 @@
 import pickle
 import sys
+import os
 from builtins import dict
 
 import pandas as pd
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS, cross_origin
+import requests
 
 app = Flask(__name__, static_folder='./aqi-frontend/build/static',
             template_folder='./aqi-frontend/build')
@@ -23,6 +25,15 @@ def predict_aqi(data: dict, filename: str) -> float:
 def index() -> str:
     # Just verify if server is up
     return "Hello World"
+
+
+@app.route('/city')
+@cross_origin()
+def get_city_data() -> dict:
+    city = request.args['city']
+    api_key = os.environ.get('API_KEY')
+    url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&APPID={api_key}&units=metric'
+    return jsonify(requests.get(url).json())
 
 
 @app.route('/aqi-frontend')
@@ -45,4 +56,5 @@ def predict() -> dict:
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    is_prod = bool(os.environ.get('IS_HEROKU', False))
+    app.run(debug=~is_prod)

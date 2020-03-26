@@ -27,7 +27,7 @@ beautifulsoup4=4.8.0=py37_0
 bitarray=1.0.1=py37h7b6447c_0
 bkcharts=0.2=py37_0
 blas=1.0=mkl
-bleach=3.1.1=py37_0
+bleach=3.1.2=py37_0
 blosc=1.16.3=hd408876_0
 bokeh=1.3.4=py37_0
 boto=2.49.0=py37_0

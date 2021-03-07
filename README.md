@@ -35,5 +35,7 @@ You can enter various climate details or select one of the popular cities. Final
 
 **Demo**: https://aqi-prediction.herokuapp.com/aqi-frontend
 
-**Screenshot**:
+
+**Screenshot**:<br>
+
 ![Screenshot](https://raw.githubusercontent.com/vneogi199/Air-Quality-Index-Prediction/master/demo.png)
